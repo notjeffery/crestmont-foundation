@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { CheckCircle2, ShieldAlert } from "lucide-react";
+import { ShieldAlert } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import IntakeForm from "@/components/IntakeForm";
-import { getNeed } from "@/lib/needs";
+import ProgramGrid from "@/components/ProgramGrid";
+import { programs } from "@/lib/programs";
 import { images } from "@/lib/images";
 
-export const metadata: Metadata = { title: "Get Help | Crestmont Foundation" };
+export const metadata: Metadata = {
+  title: "Get Help | Crestmont Foundation",
+  description:
+    "Explore Crestmont Foundation's programs, see what each one covers, and apply for the help you need.",
+};
 
 export default function GetHelpPage({
   searchParams,
@@ -15,8 +19,7 @@ export default function GetHelpPage({
   searchParams: { zip?: string; need?: string };
 }) {
   const zip = /^\d{5}$/.test(searchParams.zip ?? "") ? (searchParams.zip as string) : "";
-  const need = getNeed(searchParams.need);
-  const readyList = (need ?? getNeed("other")!).ready;
+  const initialOpenId = programs.some((p) => p.id === searchParams.need) ? searchParams.need : undefined;
 
   return (
     <>
@@ -39,48 +42,42 @@ export default function GetHelpPage({
               We're here to help.
             </h1>
             <p className="mt-4 max-w-2xl text-lg text-white/85">
-              {need && zip
-                ? `Support for ${need.label.toLowerCase()} near ${zip}. Tell us a bit about your situation and we'll connect you with the right people.`
-                : "Tell us a bit about your situation and we'll connect you with the right people."}
+              Browse our programs, see what each one covers, and apply when you're ready.
             </p>
-            <a
-              href="/#get-help"
-              className="mt-5 inline-block text-sm font-semibold text-burnt-light underline underline-offset-4"
-            >
-              Change my search
-            </a>
           </div>
         </section>
 
         <section className="bg-cream py-16">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[1fr_1.4fr]">
-            <div className="space-y-6">
-              <div className="rounded-2xl bg-white p-6 shadow-sm">
-                <h2 className="font-serif text-xl font-semibold text-ink">Helpful to have ready</h2>
-                <ul className="mt-4 space-y-3">
-                  {readyList.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-ink/80">
-                      <CheckCircle2 size={18} className="mt-0.5 shrink-0 text-burnt" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-4 text-xs text-ink/50">Don't have everything? Reach out anyway.</p>
-              </div>
-
-              <div className="rounded-2xl border border-burnt/40 bg-burnt/10 p-6">
-                <h2 className="flex items-center gap-2 font-serif text-xl font-semibold text-ink">
-                  <ShieldAlert size={20} className="text-burnt-dark" /> In an emergency
-                </h2>
-                <ul className="mt-3 space-y-2 text-sm text-ink/80">
-                  <li>Call <strong>911</strong> if anyone is in immediate danger.</li>
-                  <li>Call or text <strong>988</strong> for a mental health crisis.</li>
-                  <li>Call <strong>211</strong> any time to find local services.</li>
-                </ul>
-              </div>
+          <div className="mx-auto max-w-7xl px-6">
+            <div className="max-w-4xl space-y-4 text-lg leading-relaxed text-ink/75">
+              <p>
+                When a household is under strain, the need is rarely just one thing. It may be a missed payment, an
+                empty pantry, a damaged roof, or simply not knowing where to turn.
+              </p>
+              <p>
+                Crestmont Foundation brings practical support together in one place, helping people through the
+                immediate problem while building toward lasting stability.
+              </p>
+              <p>Everyone who reaches out is treated with respect and listened to without judgment.</p>
             </div>
 
-            <IntakeForm initialZip={zip} initialNeed={need?.id ?? ""} />
+            <h2 className="mt-16 font-serif text-3xl font-bold uppercase tracking-wide text-ink sm:text-4xl">
+              Our Core Programs
+            </h2>
+            <div className="mt-4 h-1 w-24 bg-burnt" />
+
+            <ProgramGrid initialOpenId={initialOpenId} zip={zip || undefined} />
+
+            <div className="mt-12 rounded-2xl border border-burnt/40 bg-burnt/10 p-6 sm:p-8">
+              <h2 className="flex items-center gap-2 font-serif text-xl font-semibold text-ink sm:text-2xl">
+                <ShieldAlert size={22} className="text-burnt-dark" /> In an emergency
+              </h2>
+              <ul className="mt-3 space-y-2 text-ink/80">
+                <li>Call <strong>911</strong> if anyone is in immediate danger.</li>
+                <li>Call or text <strong>988</strong> for a mental health crisis.</li>
+                <li>Call <strong>211</strong> any time to find local services.</li>
+              </ul>
+            </div>
           </div>
         </section>
       </main>

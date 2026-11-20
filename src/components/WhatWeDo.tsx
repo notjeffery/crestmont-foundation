@@ -61,7 +61,7 @@ export default function WhatWeDo() {
               <h3 className="font-serif text-2xl font-semibold text-ink sm:text-3xl">{active.title}</h3>
               <p className="mt-3 max-w-2xl leading-relaxed text-ink/70">{active.text}</p>
               <a
-                href={`/services#${active.id}`}
+                href={`/get-help?need=${active.id}`}
                 className="group mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-ink"
               >
                 <ChevronRight size={16} className="text-burnt transition group-hover:translate-x-1" />
