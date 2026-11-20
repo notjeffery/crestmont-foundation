@@ -24,7 +24,7 @@ export default function GetHelpPage({
       <main>
         <section className="relative overflow-hidden bg-ink-900 pb-20 pt-40 text-white">
           <Image
-            src={images.getHelpBg}
+            src={images.helpBg}
             alt=""
             fill
             priority

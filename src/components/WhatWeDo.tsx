@@ -3,17 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { ChevronRight } from "lucide-react";
-import { images } from "@/lib/images";
-
-const programs = [
-  { id: "housing", title: "Housing & Mortgage Help", text: "Rental aid, foreclosure prevention, and mortgage assistance to keep families safely in their homes.", image: images.programs.housing },
-  { id: "food", title: "Food & Nutrition", text: "Pantries, meal programs, and groceries for families and individuals at risk of hunger.", image: images.programs.food },
-  { id: "education", title: "Education", text: "Tutoring, scholarships, school supplies, and adult learning programs that open doors.", image: images.programs.education },
-  { id: "health", title: "Health & Wellness", text: "Care navigation, mental health support, and help with medical bills for the whole person.", image: images.programs.health },
-  { id: "disability", title: "Disability Support", text: "Home accessibility, equipment, and guidance on benefits and services.", image: images.programs.disability },
-  { id: "disaster", title: "Disaster & Home Emergency Relief", text: "Fast help after storms, fires, floods, or sudden damage to your home, plus long-term recovery support.", image: images.programs.disaster },
-  { id: "other", title: "Other Support", text: "Emergency cash aid, utilities, and help for needs that don't fit anywhere else.", image: images.programs.other },
-];
+import { programs } from "@/lib/programs";
 
 export default function WhatWeDo() {
   const [activeId, setActiveId] = useState(programs[0].id);
@@ -71,7 +61,7 @@ export default function WhatWeDo() {
               <h3 className="font-serif text-2xl font-semibold text-ink sm:text-3xl">{active.title}</h3>
               <p className="mt-3 max-w-2xl leading-relaxed text-ink/70">{active.text}</p>
               <a
-                href="#get-help"
+                href={`/services#${active.id}`}
                 className="group mt-6 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.15em] text-ink"
               >
                 <ChevronRight size={16} className="text-burnt transition group-hover:translate-x-1" />
