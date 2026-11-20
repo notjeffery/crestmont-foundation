@@ -4,7 +4,6 @@ import { ShieldAlert } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProgramGrid from "@/components/ProgramGrid";
-import { programs } from "@/lib/programs";
 import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
@@ -19,7 +18,6 @@ export default function GetHelpPage({
   searchParams: { zip?: string; need?: string };
 }) {
   const zip = /^\d{5}$/.test(searchParams.zip ?? "") ? (searchParams.zip as string) : "";
-  const initialOpenId = programs.some((p) => p.id === searchParams.need) ? searchParams.need : undefined;
 
   return (
     <>
@@ -66,7 +64,7 @@ export default function GetHelpPage({
             </h2>
             <div className="mt-4 h-1 w-24 bg-burnt" />
 
-            <ProgramGrid initialOpenId={initialOpenId} zip={zip || undefined} />
+            <ProgramGrid zip={zip || undefined} />
 
             <div className="mt-12 rounded-2xl border border-burnt/40 bg-burnt/10 p-6 sm:p-8">
               <h2 className="flex items-center gap-2 font-serif text-xl font-semibold text-ink sm:text-2xl">

@@ -29,14 +29,13 @@ const icons: Record<string, LucideIcon> = {
 };
 
 type Props = {
-  /** Program to open on load (e.g. when arriving from the home page "Find Help" form). */
-  initialOpenId?: string;
   /** Validated 5-digit ZIP carried through to the application form. */
   zip?: string;
 };
 
-export default function ProgramGrid({ initialOpenId, zip }: Props) {
-  const [openId, setOpenId] = useState<string | null>(initialOpenId ?? null);
+export default function ProgramGrid({ zip }: Props) {
+  // The details modal only opens when someone clicks "View program details".
+  const [openId, setOpenId] = useState<string | null>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const open = programs.find((p) => p.id === openId) ?? null;
 
